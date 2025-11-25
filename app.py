@@ -167,7 +167,7 @@ with col_kpi:
         
     # KPI 3
     with st.container(border=True):
-        st.metric("Economia Estimada", "15.000 L", "+12%")
+        st.metric("Economia Estimada (mensal)", "2.000 m³", "+12%")
 
 # === COLUNA DA ESQUERDA (MAPA) ===
 with col_map:
@@ -205,12 +205,13 @@ st.divider()
 st.subheader("📋 Detalhamento por Região")
 
 # 1. Selecionar e Copiar apenas as colunas que queremos
-df_display = df[['id', 'culture', 'humidity', 'hoursToNextRainfall', 'expectedRainfall', 'Status']].copy()
+df_display = df[['id', 'culture', 'soil', 'humidity', 'hoursToNextRainfall', 'expectedRainfall', 'Status']].copy()
 
 # 2. Renomear para ficar igual à imagem (Nomes Bonitinhos)
 df_display.columns = [
     "Região", 
     "Cultura", 
+    "Solo",
     "Umidade (%)", 
     "Previsão Chuva (h)", 
     "Qtd. Chuva (mm)", 
