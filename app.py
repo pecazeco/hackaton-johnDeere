@@ -33,8 +33,8 @@ def prever_umidade_solo(umidade_atual, chuva_mm, tipo_solo):
 
 
 # Configuração da Página
-st.set_page_config(page_title="AgroFlow", page_icon="💧", layout="wide")
-st.title("💧 AgroFlow: Monitoramento Inteligente")
+st.set_page_config(page_title="AquaSense", page_icon="💧", layout="wide")
+st.title("💧 AquaSense: Monitoramento Inteligente")
 
 # --- 1. DADOS (7 Regiões com Coordenadas de Polígonos) ---
 SEDE_COORDS = {"lat": -12.760, "lon": -54.270, "id": "Sede"}
