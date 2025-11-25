@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+     <style>
+        #map { height: 400px; }
+     </style>
+</head>
+<body>
+
+     <div id="map"></div>
+
+    
+</body>
+    <script>
+        const map = L.map('map').setView([-12.725203627597018, -54.271646604412936], 12);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        //show current latlon on click
+        map.on('click', function(e) {
+            console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+        });
+
+        const regions = [
+            {
+                id: 1,
+                culture: "Trigo",
+                humidity: 85,
+                expectedRainfall: 120,
+                hoursToNextRainfall: 5, 
+                coordinates: [
+                    [-12.766267768166134, -54.28126390734238],
+                    [-12.768946439455943, -54.273547208424276],
+                    [-12.746511691473138, -54.267027176826396],
+                    [-12.74525595652056, -54.27668055370488],
+                ]
+            },
+            {
+                id: 2,
+                culture: "Milho",
+                humidity: 70,
+                expectedRainfall: 70,
+                hoursToNextRainfall: 3, 
+                coordinates: [
+                    [-12.74986028757498, -54.25841742541258],
+                    [-12.771792496604766, -54.26510928158354],
+                    [-12.768946439455943, -54.27324528621427],
+                    [-12.746532620336273, -54.26696971139147],
+                ]
+            },
+            {
+                id: 3,
+                culture: "Milho",
+                humidity: 20,
+                expectedRainfall: 70,
+                hoursToNextRainfall: 3,
+                coordinates: [
+                    [-12.75002771621775, -54.25788587687519],
+                    [-12.752957699544144, -54.25033636660399],
+                    [-12.774219990614707, -54.25719833378871],
+                    [-12.771918057211547, -54.264999134672685],
+                ]
+            }
+        ]
+
+        function getRegionColor(humidity, culture) {
+            if (culture === "Trigo") {
+                if (humidity > 70) {
+                    return 'green';
+                } else if (humidity >= 50) {
+                    return 'orange';
+                } else {
+                    return 'red';
+                }
+            } else if (culture === "Milho") {
+                if (humidity > 80) {
+                    return 'green';
+                } else if (humidity >= 60) {
+                    return 'orange';
+                } else {
+                    return 'red';
+                }
+            }
+            return 'gray';
+        }
+
+        regions.forEach(region => {
+            const polygon = L.polygon(region.coordinates, {color: getRegionColor(region.humidity, region.culture)}).addTo(map);
+            polygon.bindPopup(`
+                <b>${region.name}</b>
+                <br>
+                <b>Culture:</b> ${region.culture}
+                <br>    
+                <b>Humidity:</b> ${region.humidity}%
+                <br>
+                <b>Expected Rainfall:</b> ${region.expectedRainfall}mm
+            `);
+        });
+    </script>
+</html>
